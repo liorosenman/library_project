@@ -1,29 +1,25 @@
 # Database - library - DB and Classes
-## Books:
+## Books - CREATED
 Id (PK)
 Name
 Author
 Year Published
 Type (1/2/3)
-## Customers:
+## Customers - CREATED
 Id (PK)
 Name
 City
 Age
-## Loans:
+## Loans - CREATED
 CustId
 BookId
 Loandate
 Returndate
 
-# Clarifications:
-## What action will be made when a loan is over by type?
-2. Should there be a signup form?
-3. Should there be an admin user?
-## Function of logging out of the user.
-## Display all books - loaned and not loaned?
-6. Can a loaned book be deleted?
-7. What to do when a customer that has loans is to be deleted?
+# Create admin user - DONE
+# Create Login page, login with ID
+
+
 
 # Functionality:
 1. Add a new customer: by its characteristics - done by admin.
