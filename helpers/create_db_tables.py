@@ -30,10 +30,12 @@ def create_tables():
     #                 FOREIGN KEY (cust_id) REFERENCES customers(id),
     #                 FOREIGN KEY (book_id) REFERENCES books(id));
     #                 """)
-    cur.execute("""
-                INSERT INTO customers (name, city, age)
-                VALUES ('admin', 'none', 0);
-                """)
+    # cur.execute("""
+    #             INSERT INTO customers (name, city, age)
+    #             VALUES ('admin', 'none', 0);
+    #             """)
+    # cur.execute("""DROP TABLE customers""")
+
     con.commit()
     con.close()
 
