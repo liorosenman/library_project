@@ -1,57 +1,38 @@
-from flask import Flask, render_template
+from enum import Enum
+from helpers.add_customer import add_customer
+from helpers.create_db_tables import create_tables
 import sqlite3
-from helpers import create_db_tables
-from flask import Flask, render_template, request, redirect, url_for, session
 
-
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/', methods=['GET', 'POST'])
-def login_post():
-    if request.method == 'POST':
-        user_id = request.form['user_id']
-        if user_id == '1':
-            # return redirect(url_for('customers'), user_id = user_id)
-            return render_template('customers.html', user_id = user_id)
+def login():
+    con = sqlite3.connect("library.db")
+    cur = con.cursor()
+    while True:
+        id_to_log = input("What is your ID: ")
+        cur.execute(f"SELECT id FROM customers WHERE id = {id_to_log}")
+        res = cur.fetchone()
+        if res is None:
+            print("WRONG ID")
         else:
-            return "Only Admin"
+            if res[0] == 1:
+                print("MUST BE FUN")
+                user = 1
+            else:
+                print("HELL YEAH")
+                user = 2
+            break
 
-@app.route('/customers')
-def customers():
-     user_id = request.args.get('user_id')
-     return render_template('customers.html', user_id = user_id) 
-
-@app.route('/add_customer_page')
-def to_add_customer_page():
-    return render_template('add_customer.html') 
-
-@app.route('/new_customer', methods=['GET', 'POST'])
-def new_customer():
-    if request.method == 'POST':
-        name = request.form['name']
-        city = request.form['city']
-        age = request.form['age']
-        conn = sqlite3.connect('customers.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO customers (name, city, age) VALUES (?, ?, ?)', (name, city, age))
-        conn.commit()
-        conn.close()
-        return render_template('customers.html')
-    return render_template('add_customer.html')
-    
-@app.route('/books')
-def books():
-    return render_template('books.html')
+def menu():
+    choice = int(input("SELECT --- "))
+    if (choice == 1):
+        add_customer()
         
 
-if __name__== "__main__":
-    app.run(debug=True)
-    
+if(__name__ == "__main__"):
+    user = 3
+    while True:
+        login()
+        menu()
 
-        
+
+            
+

@@ -2,11 +2,12 @@
 <html>
 <head>
     <title>New Customer</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"> -->
 </head>
 <body>
     <h1>Add New Customer</h1>
-    <form method="POST" action="{{ url_for('add_customer') }}">
+    <!-- <form method="POST" action="{{ url_for('add_customer') }}"> -->
+        <form method="POST" action="customers.html"></form>
         <div>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>

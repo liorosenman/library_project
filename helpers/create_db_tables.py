@@ -36,7 +36,10 @@ def create_tables():
     #             """)
     # cur.execute("""DROP TABLE customers""")
 
+    # cur.execute("""
+    #         INSERT INTO customers (name, city, age)
+    #         VALUES ('admin', 'none', 0);
+            # """)
     con.commit()
     con.close()
 
-create_tables()
