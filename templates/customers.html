@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 <body style="background-color: brown;">
 <h1>CUSTOMERS PAGE</h1>
+
 <table border="1">
     <thead>
         <tr>
@@ -16,10 +18,22 @@
             <th>Age</th>
             <th>...</th>
         </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td><button onclick="delUser('{{item[0] }}')"> {{ item[0] }} - delete</button></td>
+            <td><button onclick="updUser('{{item[0] }}')"> {{ item[0] }} - upd</button></td>
+            
+        </tr>
+        {% endfor %}
     </thead>
 <table>
-    <a href="{{ url_for('load_add_customer_page') }}">ADD A CUSTOMER</a>
+    <a href='/add_customer'>ADD A CUSTOMER</a>
 <input type="text">
 <button>SEARCH</button>
 </body>
 </html>
+
