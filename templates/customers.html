@@ -6,7 +6,7 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 </head>
-<body style="background-color: brown;">
+<body style="background-color: rgb(172, 102, 102);">
 <h1>CUSTOMERS PAGE</h1>
 <button>SEARCH</button><input type="text">
 <table border="1">
@@ -31,7 +31,7 @@
         {% endfor %}
     </thead>
 <table>
-    <a href='/new_customer'>ADD A CUSTOMER</a>
+    
     <hr>
     <form method="POST" action="/new_customer">
     <div>
@@ -52,13 +52,16 @@
     </form> 
 
     <script>
-        function updUser(Index_to_update){
-            var newName = document.getElementById('name');
-            var newCity = document.getElementById('city');
-            var newAge = document.getElementById('age');
-            
-
+        function updUser(index_to_update){
+            var newName = document.getElementById('name').value;
+            var newCity = document.getElementById('city').value;
+            var newAge = document.getElementById('age').value;
+            axios.put(`/upd/${Index_to_update}`, {name:newName, city:newCity, age:newAge})
         }
+        function delUser(index_to_delete){
+            axios.delete(`/del/${index_to_delete}`)
+        }
+        
     </script>
 </body>
 </html>
