@@ -18,7 +18,7 @@ def login():
         user_id = request.form['user_id']
         if user_id == '1':
             customers = db_orders.get_customers()
-            return render_template('customers.html', data = customers)
+            return render_template('customers.html', customers = customers)
         else:
             return "Only Admin"
         
@@ -28,9 +28,9 @@ def load_add_customer_page():
     # return 'test'
     return render_template('add_customer.html')
 
-@app.route('/new_customer_pg')
-def direct_to_new_customer_page():
-    return redirect(url_for('load_add_customer_page'))
+# @app.route('/new_customer_pg')
+# def direct_to_new_customer_page():
+#     return redirect(url_for('load_add_customer_page'))
 
 
 @app.route('/new_customer', methods=['GET', 'POST'])
@@ -43,10 +43,11 @@ def new_customer():
         conn = sqlite3.connect('library.db')
         cursor = conn.cursor()
         cursor.execute('INSERT INTO customers (name, city, age) VALUES (?, ?, ?)', (name, city, age))
+        customers = db_orders.get_customers()
         conn.commit()
         conn.close()
-        return render_template('customers.html')
-    return render_template('add_customer.html')
+        return render_template('customers.html', customers = customers)
+    return render_template('customers.html')
     
 @app.route('/books')
 def books():

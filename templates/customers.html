@@ -8,7 +8,7 @@
 </head>
 <body style="background-color: brown;">
 <h1>CUSTOMERS PAGE</h1>
-
+<button>SEARCH</button><input type="text">
 <table border="1">
     <thead>
         <tr>
@@ -18,22 +18,48 @@
             <th>Age</th>
             <th>...</th>
         </tr>
-        {% for item in data %}
+        {% for customer in customers %}
         <tr>
-            <td>{{ item[0] }}</td>
-            <td>{{ item[1] }}</td>
-            <td>{{ item[2] }}</td>
-            <td>{{ item[3] }}</td>
-            <td><button onclick="delUser('{{item[0] }}')"> {{ item[0] }} - delete</button></td>
-            <td><button onclick="updUser('{{item[0] }}')"> {{ item[0] }} - upd</button></td>
+            <td>{{ customer[0] }}</td>
+            <td>{{ customer[1] }}</td>
+            <td>{{ customer[2] }}</td>
+            <td>{{ customer[3] }}</td>
+            <td><button onclick="delUser('{{customer[0] }}')"> {{ customer[0] }} - delete</button></td>
+            <td><button onclick="updUser('{{customer[0] }}')"> {{ customer[0] }} - upd</button></td>
             
         </tr>
         {% endfor %}
     </thead>
 <table>
-    <a href='/add_customer'>ADD A CUSTOMER</a>
-<input type="text">
-<button>SEARCH</button>
+    <a href='/new_customer'>ADD A CUSTOMER</a>
+    <hr>
+    <form method="POST" action="/new_customer">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+    </div>
+    <div>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+    </div>
+    <div>
+        <button type="submit">ADD CUSTOMER</button>
+    </div>
+    </form> 
+
+    <script>
+        function updUser(Index_to_update){
+            var newName = document.getElementById('name');
+            var newCity = document.getElementById('city');
+            var newAge = document.getElementById('age');
+            
+
+        }
+    </script>
 </body>
 </html>
 
