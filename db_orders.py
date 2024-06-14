@@ -15,6 +15,9 @@ def get_customers():
     # customer_list = [dict(row) for row in customers]
     # return jsonify(customer_list)
    
-
+def get_books():
+    conn = get_db_connection()
+    books = conn.execute('SELECT * FROM books').fetchall()
+    return books
 
 

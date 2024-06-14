@@ -4,8 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 </head>
-<body>
-    WELCOME AS ADMIN
+<body style="background-color: greenyellow">
+<h1>BOOKS PAGE</h1>
+<a href="/customers"><h2>Customer page</h2></a>
+<button>SEARCH</button><input type="text">
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Year published</th>
+            <th>Type</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book[0] }}</td>
+            <td>{{ book[1] }}</td>
+            <td>{{ book[2] }}</td>
+            <td>{{ book[3] }}</td>
+            <td>{{ book[4] }}</td>
+            <td><button onclick="delbook('{{book[0] }}')"> {{ book[0] }} - delete</button></td>
+            <td><button onclick="updbook('{{book[0] }}')"> {{ book[0] }} - upd</button></td>
+            
+        </tr>
+        {% endfor %}
+    </thead>
+<table>
+    
+    <hr>
+    <form method="POST" action="/new_book">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required>
+    </div>
+    <div>
+        <label for="year_published">Year published</label>
+        <input type="number" id="year_published" name="year_published" required>
+    </div>
+    <div>
+        <label for="type">Type</label>
+        <select id="book_type" name="book_type">
+            {% for book_type in book_types %}
+                <option value="{{ book_type.value }}">{{ book_type.name }}</option>
+            {% endfor %}
+        </select>
+
+    </div>
+    <div>
+        <button type="submit">ADD BOOK</button>
+    </div>
+    </form> 
+
+    <script>
+        function updbook(index_to_update){
+            var newName = document.getElementById('name').value;
+            var newAuthor = document.getElementById('author').value;
+            var newYearPublished = document.getElementById('year_published').value;
+            var newType = document.getElementById('book_type').value;
+            axios.put(`/updbook/${Index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
+        }
+        function delbook(index_to_delete){
+            axios.delete(`/delbook/${index_to_delete}`)
+        }
+        
+    </script>
 </body>
 </html>
+

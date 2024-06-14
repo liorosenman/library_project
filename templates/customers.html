@@ -8,6 +8,7 @@
 </head>
 <body style="background-color: rgb(172, 102, 102);">
 <h1>CUSTOMERS PAGE</h1>
+<a href="/books"><h2>Books page</h2></a>
 <button>SEARCH</button><input type="text">
 <table border="1">
     <thead>
@@ -56,10 +57,10 @@
             var newName = document.getElementById('name').value;
             var newCity = document.getElementById('city').value;
             var newAge = document.getElementById('age').value;
-            axios.put(`/upd/${Index_to_update}`, {name:newName, city:newCity, age:newAge})
+            axios.put(`/upduser/${Index_to_update}`, {name:newName, city:newCity, age:newAge})
         }
         function delUser(index_to_delete){
-            axios.delete(`/del/${index_to_delete}`)
+            axios.delete(`/deluser/${index_to_delete}`)
         }
         
     </script>

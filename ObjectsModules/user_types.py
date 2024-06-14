@@ -15,5 +15,8 @@ class user_menu(Enum):
 class admin_menu(Enum):
     ADD_CUSTOMER = 1
 
-
+class book_types(Enum):
+    TEN_DAYS = 10
+    FIVE_DAYS = 5
+    TWO_DAYS = 2
 

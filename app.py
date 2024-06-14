@@ -3,8 +3,9 @@ import sqlite3
 from helpers import create_db_tables
 from flask import Flask, render_template, request, redirect, url_for, session
 import db_orders
-
+from ObjectsModules.user_types import book_types 
 import sqlite3
+
 con = sqlite3.connect("library.db",check_same_thread=False)
 cur = con.cursor()
 
@@ -29,19 +30,8 @@ def login():
             customers = db_orders.get_customers()
             return render_template('customers.html', customers = customers)
         else:
-            return "Only Admin"
-    
-        
-
-@app.route('/add_customer')
-def load_add_customer_page():
-    # return 'test'
-    return render_template('add_customer.html')
-
-# @app.route('/new_customer_pg')
-# def direct_to_new_customer_page():
-#     return redirect(url_for('load_add_customer_page'))
-
+            return "Only Admin"      
+     
 
 @app.route('/new_customer', methods=['GET', 'POST'])
 def new_customer():
@@ -59,7 +49,7 @@ def new_customer():
         return render_template('customers.html', customers = customers)
     return render_template('customers.html')
 
-@app.route('/upd/<int:id>',methods=['put'])
+@app.route('/upduser/<int:id>',methods=['put'])
 def upd_user(id):
     data = request.json
     newName = data.get('name')
@@ -69,7 +59,7 @@ def upd_user(id):
     cur.execute(sql)
     con.commit()
 
-@app.route('/del/<int:id>', methods = ['delete'])
+@app.route('/deluser/<int:id>', methods = ['delete'])
 def del_user(id):
     sql = f"DELETE FROM customers WHERE rowid = {id}"
     cur.execute(sql)
@@ -77,9 +67,44 @@ def del_user(id):
     
 @app.route('/books')
 def books():
-    return render_template('books.html')
-        
+    books = db_orders.get_books()
+    return render_template('books.html', book_types = book_types, books = books)
 
+@app.route('/new_book', methods=['GET', 'POST'])
+def new_book():
+    if request.method == 'POST':
+        name = request.form['name']
+        author = request.form['author']
+        year_published = request.form['year_published']
+        book_type = request.form['book_type']
+        conn = sqlite3.connect('library.db')
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO books (name, author, year_published, type) VALUES (?, ?, ?, ?)',
+                        (name, author, year_published, book_type))
+        books = db_orders.get_books()
+        conn.commit()
+        conn.close()
+        return render_template('books.html', book_types = book_types,  books = books)
+    return render_template('books.html')
+
+@app.route('/updbook/<int:id>', methods=['put'])
+def upd_book(id):
+    print("THE UPDATE HAS TO WORK!!!")
+    data = request.json
+    newName = data.get('name')
+    newAuthor = data.get('author')
+    newYear = data.get('year_published')
+    newType = data.get('book_type')
+    sql = f"UPDATE books SET name = '{newName}', author='{newAuthor}', year_published={newYear}, type = '{newType}' WHERE  rowid = {id}"
+    cur.execute(sql)
+    con.commit()
+
+@app.route('/delbook/<int:id>', methods = ['delete'])
+def del_book(id):
+    sql = f"DELETE FROM books WHERE rowid = {id}"
+    cur.execute(sql)
+    con.commit()
+        
 if __name__== "__main__":
     app.run(debug=True)
     
