@@ -8,6 +8,13 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def execute_sql_command(sql):
+    conn = sqlite3.connect('library.db')
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    conn.close()
+
 def get_customers():
     conn = get_db_connection()
     customers = conn.execute('SELECT * FROM customers').fetchall()

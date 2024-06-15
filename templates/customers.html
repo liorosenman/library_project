@@ -57,7 +57,7 @@
             var newName = document.getElementById('name').value;
             var newCity = document.getElementById('city').value;
             var newAge = document.getElementById('age').value;
-            axios.put(`/upduser/${Index_to_update}`, {name:newName, city:newCity, age:newAge})
+            axios.put(`/upduser/${index_to_update}`, {name:newName, city:newCity, age:newAge})
         }
         function delUser(index_to_delete){
             axios.delete(`/deluser/${index_to_delete}`)

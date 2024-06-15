@@ -6,11 +6,13 @@ import db_orders
 from ObjectsModules.user_types import book_types 
 import sqlite3
 
-con = sqlite3.connect("library.db",check_same_thread=False)
-cur = con.cursor()
+# con = sqlite3.connect("library.db",check_same_thread=False)
+# cur = con.cursor()
 
 try:
-    cur.execute("CREATE TABLE customers(name,city,age)")
+    sql = "CREATE TABLE customers(name,city,age)"
+    db_orders.execute_sql_command(sql)
+    # cur.execute("CREATE TABLE customers(name,city,age)")
 except:
     print("table already exist")
 
@@ -35,17 +37,19 @@ def login():
 
 @app.route('/new_customer', methods=['GET', 'POST'])
 def new_customer():
-    print("ERRORRRRRRRRRRRRRRRRRRRRR")
+    # print("ERRORRRRRRRRRRRRRRRRRRRRR")
     if request.method == 'POST':
         name = request.form['name']
         city = request.form['city']
         age = request.form['age']
-        conn = sqlite3.connect('library.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO customers (name, city, age) VALUES (?, ?, ?)', (name, city, age))
+        sql = f"INSERT INTO customers (name, city, age) VALUES ('{name}','{city}',{age})"
+        db_orders.execute_sql_command(sql)
+        # conn = sqlite3.connect('library.db')
+        # cursor = conn.cursor()
+        # cursor.execute('INSERT INTO customers (name, city, age) VALUES (?, ?, ?)', (name, city, age))
         customers = db_orders.get_customers()
-        conn.commit()
-        conn.close()
+        # conn.commit()
+        # conn.close()
         return render_template('customers.html', customers = customers)
     return render_template('customers.html')
 
@@ -55,15 +59,17 @@ def upd_user(id):
     newName = data.get('name')
     newCity = data.get('city')
     newAge = data.get('age')
-    sql =f"UPDATE customers SET name = '{newName}', city='{newCity}', age={newAge} WHERE  rowid = {id}"
-    cur.execute(sql)
-    con.commit()
+    sql =f"UPDATE customers SET name = '{newName}', city='{newCity}', age={newAge} WHERE  id = {id}"
+    db_orders.execute_sql_command(sql)
+    # cur.execute(sql)
+    # con.commit()
 
 @app.route('/deluser/<int:id>', methods = ['delete'])
 def del_user(id):
-    sql = f"DELETE FROM customers WHERE rowid = {id}"
-    cur.execute(sql)
-    con.commit()
+    sql = f"DELETE FROM customers WHERE id = {id}"
+    db_orders.execute_sql_command(sql)
+    # cur.execute(sql)
+    # con.commit()
     
 @app.route('/books')
 def books():
@@ -77,13 +83,15 @@ def new_book():
         author = request.form['author']
         year_published = request.form['year_published']
         book_type = request.form['book_type']
-        conn = sqlite3.connect('library.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO books (name, author, year_published, type) VALUES (?, ?, ?, ?)',
-                        (name, author, year_published, book_type))
+        sql = f"INSERT INTO books (name, author, year_published, type) VALUES ('{name}', '{author}', {year_published}, {book_type})"
+        db_orders.execute_sql_command(sql)
+        # conn = sqlite3.connect('library.db')
+        # cursor = conn.cursor()
+        # cursor.execute('INSERT INTO books (name, author, year_published, type) VALUES (?, ?, ?, ?)',
+        #                 (name, author, year_published, book_type))
         books = db_orders.get_books()
-        conn.commit()
-        conn.close()
+        # conn.commit()
+        # conn.close()
         return render_template('books.html', book_types = book_types,  books = books)
     return render_template('books.html')
 
@@ -92,18 +100,26 @@ def upd_book(id):
     print("THE UPDATE HAS TO WORK!!!")
     data = request.json
     newName = data.get('name')
+    print(newName)
     newAuthor = data.get('author')
+    print(newAuthor)
     newYear = data.get('year_published')
-    newType = data.get('book_type')
-    sql = f"UPDATE books SET name = '{newName}', author='{newAuthor}', year_published={newYear}, type = '{newType}' WHERE  rowid = {id}"
-    cur.execute(sql)
-    con.commit()
+    print(newYear)
+    # newType = data.get('book_type')
+    # print(newType)
+    # sql = f"UPDATE books SET name = '{newName}', author='{newAuthor}', year_published={newYear}, type = '{newType}' WHERE rowid = {id}"
+    # cur.execute(sql)
+    # con.commit()
 
 @app.route('/delbook/<int:id>', methods = ['delete'])
 def del_book(id):
-    sql = f"DELETE FROM books WHERE rowid = {id}"
+    con = sqlite3.connect("library.db",check_same_thread=False)
+    cur = con.cursor()
+    print(f'THE ID FOR DELETION IS {id}')
+    sql = f"DELETE FROM books WHERE id = {id}"
     cur.execute(sql)
     con.commit()
+    con.close()
         
 if __name__== "__main__":
     app.run(debug=True)

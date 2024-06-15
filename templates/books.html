@@ -68,7 +68,7 @@
             var newAuthor = document.getElementById('author').value;
             var newYearPublished = document.getElementById('year_published').value;
             var newType = document.getElementById('book_type').value;
-            axios.put(`/updbook/${Index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
+            axios.put(`/updbook/${index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
         }
         function delbook(index_to_delete){
             axios.delete(`/delbook/${index_to_delete}`)
