@@ -96,20 +96,21 @@ def new_book():
     return render_template('books.html')
 
 @app.route('/updbook/<int:id>', methods=['put'])
+
 def upd_book(id):
     print("THE UPDATE HAS TO WORK!!!")
     data = request.json
-    newName = data.get('name')
-    print(newName)
-    newAuthor = data.get('author')
-    print(newAuthor)
-    newYear = data.get('year_published')
-    print(newYear)
-    # newType = data.get('book_type')
-    # print(newType)
-    # sql = f"UPDATE books SET name = '{newName}', author='{newAuthor}', year_published={newYear}, type = '{newType}' WHERE rowid = {id}"
-    # cur.execute(sql)
-    # con.commit()
+    print(data)
+    name = data.get('name')
+    print(name)
+    author = data.get('author')
+    print(author)
+    year = data.get('year')
+    print(year)
+    type = data.get('type')
+    print(type)
+    sql = f"UPDATE books SET name = '{name}', author='{author}', year_published={year}, type = {type} WHERE id = {id}"
+    db_orders.execute_sql_command(sql)
 
 @app.route('/delbook/<int:id>', methods = ['delete'])
 def del_book(id):

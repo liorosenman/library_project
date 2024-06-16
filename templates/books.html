@@ -45,7 +45,7 @@
         <input type="text" id="author" name="author" required>
     </div>
     <div>
-        <label for="year_published">Year published</label>
+        <label for="year_published">Year published: </label>
         <input type="number" id="year_published" name="year_published" required>
     </div>
     <div>
@@ -64,11 +64,14 @@
 
     <script>
         function updbook(index_to_update){
-            var newName = document.getElementById('name').value;
-            var newAuthor = document.getElementById('author').value;
-            var newYearPublished = document.getElementById('year_published').value;
-            var newType = document.getElementById('book_type').value;
-            axios.put(`/updbook/${index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
+            //var newName = document.getElementById('name').value;
+            // var newAuthor = document.getElementById('author').value;
+            // var newYearPublished = document.getElementById('year_published').value;
+            // var newType = document.getElementById('book_type').value;
+            // console.log(newName,  newAuthor, newYearPublished);
+            // axios.put(`/updbook/${index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
+            console.log(name.value, author.value, year_published.value, book_type.value);
+            axios.put(`/updbook/${index_to_update}`,{name:name.value,author:author.value, year:year_published.value, type:book_type.value})
         }
         function delbook(index_to_delete){
             axios.delete(`/delbook/${index_to_delete}`)

@@ -27,15 +27,13 @@ Returndate
 ### Log in as a customer
 
 ## Customers page
-### Table of customers - ID, Name, City, Age
-### Delete button for each customer
-### Add a customer button - directs to "Add client" page.
+### Table of customers - ID, Name, City, Age - DONE
+### Delete button for each customer - DONE
+### Add a customer button - DONE
 ### Search customer input row
 ### Search button
 
-## Add a new customer page
-### Fields - Name, City, Age
-### Submit button - creates new customer and directs to customers page
+
 
 
 
