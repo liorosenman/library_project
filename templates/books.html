@@ -38,7 +38,7 @@
     <form method="POST" action="/new_book">
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="bookname" name="bookname" required>
     </div>
     <div>
         <label for="author">Author:</label>
@@ -70,9 +70,10 @@
             // var newType = document.getElementById('book_type').value;
             // console.log(newName,  newAuthor, newYearPublished);
             // axios.put(`/updbook/${index_to_update}`, {name:newName, author:newAuthor, year:newYearPublished, type:newType})
-            console.log(name.value, author.value, year_published.value, book_type.value);
-            axios.put(`/updbook/${index_to_update}`,{name:name.value,author:author.value, year:year_published.value, type:book_type.value})
+            console.log(bookname.value, author.value, year_published.value, book_type.value);
+            axios.put(`/updbook/${index_to_update}`,{name:bookname.value,author:author.value, year:year_published.value, type:book_type.value})
         }
+        
         function delbook(index_to_delete){
             axios.delete(`/delbook/${index_to_delete}`)
         }

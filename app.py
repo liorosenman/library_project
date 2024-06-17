@@ -79,7 +79,7 @@ def books():
 @app.route('/new_book', methods=['GET', 'POST'])
 def new_book():
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['bookname']
         author = request.form['author']
         year_published = request.form['year_published']
         book_type = request.form['book_type']
@@ -96,7 +96,6 @@ def new_book():
     return render_template('books.html')
 
 @app.route('/updbook/<int:id>', methods=['put'])
-
 def upd_book(id):
     print("THE UPDATE HAS TO WORK!!!")
     data = request.json
@@ -114,13 +113,17 @@ def upd_book(id):
 
 @app.route('/delbook/<int:id>', methods = ['delete'])
 def del_book(id):
-    con = sqlite3.connect("library.db",check_same_thread=False)
-    cur = con.cursor()
-    print(f'THE ID FOR DELETION IS {id}')
-    sql = f"DELETE FROM books WHERE id = {id}"
-    cur.execute(sql)
-    con.commit()
-    con.close()
+    if request.method == 'DELETE':
+        con = sqlite3.connect("library.db",check_same_thread=False)
+        cur = con.cursor()
+        print(f'THE ID FOR DELETION IS {id}')
+        sql = f"DELETE FROM books WHERE id = {id}"
+        db_orders.execute_sql_command(sql)
+        cur.execute(sql)
+        con.commit()
+        con.close()
+        books = db_orders.get_books()
+        return render_template('books.html', books = books)
         
 if __name__== "__main__":
     app.run(debug=True)
